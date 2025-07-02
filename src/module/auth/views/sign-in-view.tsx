@@ -12,6 +12,7 @@ import Link from "next/link"
 import { authClient } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { FaGithub, FaGoogle } from "react-icons/fa"
 
 const formSchema =z.object({
     email: z.string().email(),
@@ -37,11 +38,13 @@ export const SignInView = () =>{
             {
                 email: data.email,
                 password: data.password,
+                callbackURL:"/",
             },
             {
                 onSuccess: () =>{
-                    setPending(false)
                     router.push("/")
+                    setPending(false)
+                
                 },
                 onError: ({error}) =>{
                     setPending(false)
@@ -50,6 +53,29 @@ export const SignInView = () =>{
             }
         )
     }
+
+    const onSocial =async (provider: "github" | "google") =>{
+        setError(null)
+        setPending(true)
+        authClient.signIn.social(
+            {   
+                provider:provider,
+                callbackURL:"/",
+            },
+            {
+                onSuccess: () =>{
+                    setPending(false)
+                
+                },
+                onError: ({error}) =>{
+                    setPending(false)
+                    setError(error.message)
+                }
+            }
+        )
+    }
+
+
     console.log("Sign in view")
     return (
     <div className="flex flex-col gap-6 ">
@@ -120,11 +146,13 @@ export const SignInView = () =>{
                         </span>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
-                        <Button disabled={pending} variant="outline" type="button" className="w-full">
-                            Google
+                        <Button disabled={pending} variant="outline" type="button" className="w-full" 
+                        onClick={() => onSocial("google")}>
+                            <FaGoogle/>
                         </Button>
-                        <Button disabled={pending} variant="outline" type="button" className="w-full">
-                            Github
+                        <Button disabled={pending} variant="outline" type="button" className="w-full" 
+                        onClick={() => onSocial("github")}>
+                            <FaGithub/>
                         </Button>
                     </div>
                     <div className="text-center text-sm">
@@ -138,7 +166,7 @@ export const SignInView = () =>{
                 <div className="bg-radial from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
                 <img src="/logo.svg" alt="image" className="h-[92px] w-[92px]"/>
                     <p className="text-2xl font-semibold text-white">
-                        Talk.AI
+                        TalkAI
                     </p>
                 </div>
             </CardContent>
