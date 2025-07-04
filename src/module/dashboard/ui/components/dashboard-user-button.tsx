@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button"
 export const DashboardUserButton = () =>{
     
     const router = useRouter()
-    const isMobile = useIsMobile
+    const isMobile = useIsMobile()
     const {data, isPending } = authClient.useSession()
 
     const onLogout =() => {
