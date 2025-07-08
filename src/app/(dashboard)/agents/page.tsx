@@ -11,7 +11,7 @@ import {ErrorBoundary} from "react-error-boundary"
 
 const Page = async() =>{
 
-    onst session = await auth.api.getSession({
+    const session = await auth.api.getSession({
         headers: await headers(),
       })
     
