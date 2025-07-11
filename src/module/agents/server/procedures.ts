@@ -3,14 +3,63 @@ import { agents } from "@/db/schema";
 import { createTRPCRouter,baseProcedure, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { promise, z } from "zod";
-import { agentsInsertSchema } from "../schemas";
+import { agentsInsertSchema, agentsUpdateSchema } from "../schemas";
 import { auth } from "@/lib/auth";
 import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "@/constants";
 
 
 export const agentsRouter = createTRPCRouter({
-    //TODO: change 'getOne' to use protected procedure
+
+        remove: protectedProcedure
+        .input(z.object({id: z.string()}))
+        .mutation(async({ ctx , input })=>{
+            const[removedAgent] = await db
+            .delete(agents)
+            .where(
+                and(
+                    eq(agents.id, input.id),
+                    eq(agents.userId, ctx.auth.user.id),
+                ),
+            )
+            .returning()
+
+            if(!removedAgent){
+                throw new TRPCError({
+                    code:"NOT_FOUND",
+                    message: "Agent not found",
+                })
+            }
+
+            return removedAgent;
+        }),
+
+        update:protectedProcedure
+        .input(agentsUpdateSchema)
+        .mutation(async({ctx,input})=>{
+
+            const [updatedAgent] = await db
+            .update(agents)
+            .set(input)
+            .where(
+                and(
+                    eq(agents.id, input.id),
+                    eq(agents.userId, ctx.auth.user.id),
+
+                )
+            )
+            .returning()
+
+            if(!updatedAgent){
+                throw new TRPCError({
+                    code:"NOT_FOUND",
+                    message: "Agent not found",
+                })
+            }
+
+            return updatedAgent
+        }),
+
         getOne: protectedProcedure.input(z.object({ id: z.string()})).query(async({input,ctx})=>{
         const [existingAgent] = await db
          .select({
