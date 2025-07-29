@@ -58,13 +58,17 @@ export const MeetingForm = ({
                     trpc.meetings.getMany.queryOptions({}),
                 )
 
-                //TODO: INVALIDATE free tier usage
+                await queryClient.invalidateQueries(
+                    trpc.premium.getFreeUsage.queryOptions(),
+                )
                 onSuccess?.(data.id)
             },
             onError:(error) =>{
                 toast.error(error.message)
 
-                //TODO: check if error code is "FORBIDDEN", redirct to "/upgrade"
+                if(error.data?.code === "FORBIDDEN"){
+                    router.push("/upgrade")
+                }
             },
         }),
     )
@@ -86,7 +90,6 @@ export const MeetingForm = ({
             onError:(error) =>{
                 toast.error(error.message)
 
-                //TODO: check if error code is "FORBIDDEN", redirct to "/upgrade"
             },
         }),
     )
