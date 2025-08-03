@@ -1,10 +1,9 @@
 import {db} from "@/db"
 import { agents, meetings, user } from "@/db/schema";
-import { createTRPCRouter,baseProcedure, protectedProcedure, premiumProcedure } from "@/trpc/init";
+import { createTRPCRouter,protectedProcedure, premiumProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { promise, z } from "zod";
+import { z } from "zod";
 // import { agentsInsertSchema, agentsUpdateSchema } from "../schemas";
-import { auth } from "@/lib/auth";
 import { and, count, desc, eq, getTableColumns, ilike,inArray,sql } from "drizzle-orm";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "@/constants";
 import { meetingsInsertSchema, meetingsUpdateSchema } from "../schemas";
@@ -12,7 +11,6 @@ import { MeetingStatus, StreamTranscriptItem } from "../types";
 import { streamVideo } from "@/lib/stream-video";
 import { generateAvatarUri } from "@/lib/avatar";
 import JSONL from "jsonl-parse-stringify"
-import { text } from "stream/consumers";
 import { streamChat } from "@/lib/stream-chat";
 
 

@@ -3,15 +3,10 @@ import { ChevronsUpDownIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
-  Command,
-  CommandDialog,
   CommandInput,
   CommandList,
   CommandEmpty,
-  CommandGroup,
   CommandItem,
-  CommandShortcut,
-  CommandSeparator,
   CommandResponsiveDialog
 } from "@/components/ui/command"
 

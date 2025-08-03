@@ -1,10 +1,9 @@
 "use client"
 
-import {  useSuspenseQueries, useSuspenseQuery } from "@tanstack/react-query"
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { useTRPC } from "@/trpc/client"
 import { LoadingState } from "@/components/loading-state"
 import { ErrorState } from "@/components/error-state"
-import { Button } from "@/components/ui/button"
 import { columns, } from "../components/columns"
 import { EmptyState } from "@/components/empty-state"
 import { useAgentFilters } from "../../hooks/use-agents-filters"
