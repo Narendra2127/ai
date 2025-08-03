@@ -3,7 +3,6 @@
 import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
-  SidebarProvider,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,

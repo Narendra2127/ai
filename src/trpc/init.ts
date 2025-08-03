@@ -5,7 +5,6 @@ import { polarClient } from '@/lib/polar';
 import { MAX_FREE_AGENTS, MAX_FREE_MEETINGS } from '@/module/premium/constants';
 import { initTRPC, TRPCError } from '@trpc/server';
 import { count, eq } from 'drizzle-orm';
-import next from 'next';
 import { headers } from 'next/headers';
 import { cache } from 'react';
 export const createTRPCContext = cache(async () => {

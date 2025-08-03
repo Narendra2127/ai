@@ -1,7 +1,5 @@
-import { z } from 'zod';
 import { agentsRouter } from '@/module/agents/server/procedures';
-import { baseProcedure, createTRPCRouter } from '../init';
-import { agents } from '@/db/schema';
+import { createTRPCRouter } from '../init';
 import { meetingsRouter } from '@/module/meetings/server/procedures';
 import { premiumRouter } from '@/module/premium/server/procedures';
 export const appRouter = createTRPCRouter({

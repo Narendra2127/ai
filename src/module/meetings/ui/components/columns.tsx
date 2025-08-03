@@ -33,7 +33,7 @@ const statusColorMap = {
   processing:"bg-gray-300/20 text-gray-800 border-gray-800/5",
 }
 
-type Meeting  = MeetingGetMany[number]
+// type Meeting  = MeetingGetMany[number]
 export const columns: ColumnDef<MeetingGetMany[number]>[] = [
   {
     accessorKey: "name",
